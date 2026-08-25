@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { FAQ } from '@/components/blocks/FAQ';
@@ -15,6 +14,7 @@ import { trackEvent } from '@/lib/analytics';
 import { site } from '@/lib/site';
 import {
   CALCULATOR_STORAGE_KEY,
+  formatMoney,
   REMODELACIONES_MARKETS,
   type RemodelacionesMarket,
   type RemodelacionesMarketId,
@@ -28,20 +28,66 @@ const MARKET_IDS = Object.keys(
   REMODELACIONES_MARKETS,
 ) as RemodelacionesMarketId[];
 
+/** Demo numbers for the visibility section (illustrative, not a real case). */
+const DEMO = {
+  inquiries: 120,
+  qualified: 84,
+  visits: 52,
+  quotes: 40,
+  won: 12,
+};
+
 export function RemodelacionesLanding({ market }: Props) {
   const t = useTranslations('Remodelaciones');
   const tc = useTranslations('Common');
   const tn = useTranslations('Nav');
+
   const problems = t.raw('problems') as { n: string; text: string }[];
-  const howSteps = t.raw('howSteps') as {
+  const modules = t.raw('modules') as { title: string; text: string }[];
+  const followPipeline = t.raw('followPipeline') as string[];
+  const followUpExamples = t.raw('followUpExamples') as string[];
+  const opsSoftItems = t.raw('opsSoftItems') as string[];
+  const clusterSystemItems = t.raw('clusterSystemItems') as string[];
+  const integrations = t.raw('integrations') as string[];
+  const demoSteps = t.raw('demoSteps') as { t: string; d: string }[];
+  const handoffAutoItems = t.raw('handoffAutoItems') as string[];
+  const handoffExamples = t.raw('handoffExamples') as string[];
+  const sources = t.raw('sources') as string[];
+  const demoLeads = t.raw('demoLeads') as {
+    id: string;
+    source: string;
+    status: string;
+    next: string;
+  }[];
+  const implementationSteps = t.raw('implSteps5') as {
+    n: string;
     title: string;
     text: string;
-    items?: string[];
   }[];
-  const modules = t.raw('modules') as { title: string; text: string }[];
-  const diffs = t.raw('diffs') as { title: string; text: string }[];
-  const impl = t.raw('implSteps') as { n: string; title: string; text: string }[];
+  const trustPoints = t.raw('trustPoints') as string[];
   const faqs = t.raw('faqs') as { q: string; a: string }[];
+  const visStats = t.raw('visStats') as {
+    inquiries: string;
+    qualified: string;
+    visits: string;
+    quotes: string;
+    won: string;
+    pipelineValue: string;
+  };
+
+  const pct = (a: number, b: number) =>
+    b === 0 ? '0%' : `${Math.round((a / b) * 100)}%`;
+
+  const pipelineValue = formatMoney(
+    market.id === 'cl'
+      ? 48_000_000
+      : market.id === 'mx'
+        ? 1_200_000
+        : market.id === 'es'
+          ? 96_000
+          : 48_000,
+    market,
+  );
 
   const trackWa = (source: string) =>
     trackEvent('WhatsAppClick', {
@@ -137,6 +183,7 @@ export function RemodelacionesLanding({ market }: Props) {
                 />
               </div>
               <p className="mt-4 text-sm text-faint">{t('heroMicro')}</p>
+              <p className="mt-2 text-sm text-accent">{t('responseTimePromise')}</p>
               <p className="mt-4">
                 <a
                   href="#calculadora"
@@ -157,7 +204,7 @@ export function RemodelacionesLanding({ market }: Props) {
           title={t('problemTitle')}
           description={t('problemIntro')}
         />
-        <div className="mt-14 grid gap-4 sm:grid-cols-2">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {problems.map((item, i) => (
             <Reveal
               key={item.n}
@@ -176,139 +223,297 @@ export function RemodelacionesLanding({ market }: Props) {
 
       {/* CALCULADORA */}
       <Section tone="dark" id="calculadora">
-        <SectionHeading
-          eyebrow={t('calcEyebrow')}
-          title={t('calcTitle')}
-        />
+        <SectionHeading eyebrow={t('calcEyebrow')} title={t('calcTitle')} />
         <div className="mt-12">
           <BudgetCalculator market={market} />
         </div>
       </Section>
 
-      {/* CÓMO FUNCIONA */}
-      <Section tone="soft" id="como-funciona">
-        <SectionHeading eyebrow={t('howEyebrow')} title={t('howTitle')} />
-        <ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {howSteps.map((step, i) => (
-            <Reveal
-              key={step.title}
-              delay={i * 40}
-              className="border border-line bg-paper p-6"
-            >
-              <span className="font-mono text-xs text-accent">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-3 font-display text-2xl normal-case tracking-normal">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted">{step.text}</p>
-              {step.items && step.items.length > 0 && (
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {step.items.map((item) => (
-                    <li
-                      key={item}
-                      className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-faint"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Reveal>
-          ))}
-        </ol>
+      {/* VISIBILIDAD */}
+      <Section tone="soft" id="visibilidad">
+        <SectionHeading
+          eyebrow={t('visEyebrow')}
+          title={t('visTitle')}
+          description={t('visDesc')}
+        />
+        <Reveal className="mt-12 border border-line bg-paper p-6 sm:p-8">
+          <div className="mb-6 inline-flex items-center gap-2 border border-line bg-paper-soft px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+            {t('visRef')}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Stat label={visStats.inquiries} value={String(DEMO.inquiries)} />
+            <Stat label={visStats.qualified} value={String(DEMO.qualified)} />
+            <Stat label={visStats.visits} value={String(DEMO.visits)} />
+            <Stat label={visStats.quotes} value={String(DEMO.quotes)} />
+            <Stat label={visStats.won} value={String(DEMO.won)} />
+            <Stat label={visStats.pipelineValue} value={pipelineValue} accent />
+          </div>
+          <div className="mt-10 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            {(
+              [
+                [t('funnelConsulta'), pct(DEMO.inquiries, DEMO.inquiries)],
+                [t('funnelCalificada'), pct(DEMO.qualified, DEMO.inquiries)],
+                [t('funnelVisita'), pct(DEMO.visits, DEMO.qualified)],
+                [t('funnelPresupuesto'), pct(DEMO.quotes, DEMO.visits)],
+                [t('funnelCierre'), pct(DEMO.won, DEMO.quotes)],
+              ] as [string, string][]
+            ).map(([label, rate], idx, arr) => (
+              <div key={label} className="flex items-center gap-3">
+                <div className="border border-line px-4 py-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+                    {label}
+                  </p>
+                  <p className="mt-1 font-mono text-sm text-fg">{rate}</p>
+                </div>
+                {idx < arr.length - 1 && (
+                  <span className="hidden text-faint lg:inline">→</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </Section>
 
-      {/* MÓDULOS */}
-      <Section tone="light" id="modulos">
+      {/* SISTEMA */}
+      <Section tone="dark" id="sistema">
         <SectionHeading
           eyebrow={t('modulesEyebrow')}
           title={t('modulesTitle')}
         />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {modules.map((mod, i) => (
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {modules.map((m, i) => (
             <Reveal
-              key={mod.title}
+              key={m.title}
               delay={i * 40}
-              className="border border-line bg-paper p-6"
+              className="border border-line bg-surface p-5 transition-colors hover:border-accent/50 hover:bg-surface-2"
             >
-              <h3 className="font-display text-2xl normal-case tracking-normal">
-                {mod.title}
+              <h3 className="font-display text-xl normal-case tracking-normal">
+                {m.title}
               </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
-                {mod.text}
-              </p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{m.text}</p>
             </Reveal>
           ))}
         </div>
       </Section>
 
-      {/* INTEGRACIÓN */}
-      <Section tone="dark" id="integracion">
+      {/* SEGUIMIENTO */}
+      <Section tone="light" id="seguimiento">
+        <SectionHeading
+          eyebrow={t('followEyebrow')}
+          title={t('followTitle')}
+          description={t('followDesc')}
+        />
+        <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <Reveal className="border border-line bg-paper p-6">
+            <ol className="space-y-0">
+              {followPipeline.map((step, i) => (
+                <li key={step} className="relative pl-8 pb-6 last:pb-0">
+                  <span className="absolute left-0 top-1.5 h-2.5 w-2.5 bg-accent" />
+                  {i < followPipeline.length - 1 && (
+                    <span className="absolute left-[4px] top-4 h-full w-px bg-line" />
+                  )}
+                  <p className="text-[15px] text-ink">{step}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+          <Reveal delay={80}>
+            <ul className="space-y-3">
+              {followUpExamples.map((ex) => (
+                <li
+                  key={ex}
+                  className="border-l-2 border-accent bg-paper-soft px-4 py-3 text-[15px] text-ink/80"
+                >
+                  {ex}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 border-l-4 border-accent bg-paper-soft px-5 py-5 text-lg leading-snug text-ink sm:text-xl">
+              {t('followClose')}
+            </p>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* PRIVACIDAD / SOFTWARE */}
+      <Section tone="dark" id="privacidad-datos">
         <SectionHeading
           eyebrow={t('integrateEyebrow')}
-          title={t('integrateTitle')}
-          description={t('integrateText')}
+          title={t('privacyTitle')}
+          description={t('privacyDesc')}
         />
-        <Reveal className="mt-12 grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-          <div className="border border-line bg-surface p-6">
-            <p className="mono-label text-faint">{t('integrateTheirLabel')}</p>
-            <p className="mt-3 text-lg font-medium text-fg">{t('integrateTheir')}</p>
-            <ul className="mt-4 space-y-2 text-sm text-muted">
-              {(t.raw('integrateTheirItems') as string[]).map((item) => (
-                <li key={item} className="border-b border-line py-2">
-                  {item}
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <Reveal className="border border-line bg-surface p-6">
+            <p className="mono-label text-faint">{t('opsSoftLabel')}</p>
+            <ul className="mt-5 space-y-2 text-[15px] text-muted">
+              {opsSoftItems.map((i) => (
+                <li key={i} className="border-b border-line py-2">
+                  {i}
                 </li>
               ))}
             </ul>
-          </div>
-          <span className="hidden text-center font-mono text-accent lg:block">
-            +
-          </span>
-          <div className="border border-accent/40 bg-surface p-6">
-            <p className="mono-label text-accent">{t('integrateOursLabel')}</p>
-            <p className="mt-3 text-lg font-medium text-fg">{t('integrateOurs')}</p>
-            <ul className="mt-4 space-y-2 text-sm text-muted">
-              {(t.raw('integrateOursItems') as string[]).map((item) => (
-                <li key={item} className="border-b border-line py-2">
-                  {item}
+          </Reveal>
+          <Reveal delay={80} className="border border-accent/40 bg-surface p-6">
+            <p className="mono-label text-accent">{t('clusterSystemLabel')}</p>
+            <ul className="mt-5 space-y-2 text-[15px] text-muted">
+              {clusterSystemItems.map((i) => (
+                <li key={i} className="border-b border-line py-2">
+                  {i}
                 </li>
               ))}
             </ul>
-          </div>
-        </Reveal>
-        <p className="mt-8 max-w-2xl text-[15px] text-muted">
-          {t('integrateFocus')}
-        </p>
+          </Reveal>
+        </div>
+        <p className="mt-6 text-sm text-faint">{t('integrateFocus')}</p>
       </Section>
 
-      {/* DIFERENCIACIÓN */}
-      <Section tone="light" id="diferencia">
-        <SectionHeading eyebrow={t('diffEyebrow')} title={t('diffTitle')} />
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {diffs.map((item, i) => (
-            <Reveal
-              key={item.title}
-              delay={i * 60}
-              className="border border-line bg-paper p-6"
+      {/* INTEGRACIONES */}
+      <Section tone="light" id="integraciones">
+        <SectionHeading
+          eyebrow={t('toolsEyebrow')}
+          title={t('toolsTitle')}
+          description={t('toolsDesc')}
+        />
+        <div className="mt-10 flex flex-wrap gap-2">
+          {integrations.map((item) => (
+            <span
+              key={item}
+              className="border border-line bg-paper px-4 py-2 text-sm text-ink/80"
             >
-              <p className="mono-label text-accent">{item.title}</p>
-              <p className="mt-4 text-[15px] leading-relaxed text-ink/80">
-                {item.text}
-              </p>
-            </Reveal>
+              {item}
+            </span>
           ))}
         </div>
+        <p className="mt-8 max-w-2xl text-lg text-muted">{t('toolsClose')}</p>
+      </Section>
+
+      {/* DEMO / RECORRIDO */}
+      <Section tone="dark" id="demo">
+        <SectionHeading
+          eyebrow={t('demoEyebrow')}
+          title={t('demoTitle')}
+          description={t('demoDesc')}
+        />
+        <Reveal className="mt-12">
+          <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {demoSteps.map((step) => (
+              <li
+                key={step.t}
+                className="border border-line bg-surface p-5 transition-colors hover:border-accent/40"
+              >
+                <p className="mono-label text-accent">{step.t}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{step.d}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-6 text-sm text-muted">{t('demoClose')}</p>
+        </Reveal>
+      </Section>
+
+      {/* HANDOFF */}
+      <Section tone="soft" id="handoff">
+        <SectionHeading
+          eyebrow={t('handoffEyebrow')}
+          title={t('handoffTitle')}
+          description={t('handoffDesc')}
+        />
+        <div className="mt-12 grid gap-4 lg:grid-cols-2">
+          <Reveal className="border border-line bg-paper p-7">
+            <p className="mono-label text-muted">{t('handoffAutoLabel')}</p>
+            <h3 className="mt-3 font-display text-3xl normal-case tracking-normal text-ink">
+              {t('handoffAutoTitle')}
+            </h3>
+            <ul className="mt-5 space-y-2 text-sm text-ink/75">
+              {handoffAutoItems.map((item) => (
+                <li key={item} className="border-b border-line py-2">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal delay={80} className="border border-line bg-paper p-7">
+            <p className="mono-label text-accent">{t('handoffTeamLabel')}</p>
+            <h3 className="mt-3 font-display text-3xl normal-case tracking-normal text-ink">
+              {t('handoffTeamTitle')}
+            </h3>
+            <ul className="mt-5 space-y-2 text-sm text-ink/75">
+              {handoffExamples.map((ex) => (
+                <li key={ex} className="border-b border-line py-2">
+                  {ex}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+        <p className="mt-6 text-muted">{t('handoffClose')}</p>
+      </Section>
+
+      {/* DASHBOARD */}
+      <Section tone="dark" id="dashboard">
+        <SectionHeading
+          eyebrow={t('dashEyebrow')}
+          title={t('dashTitle')}
+          description={t('dashDesc')}
+        />
+        <Reveal className="mt-12 border border-line bg-ink-950 p-6 sm:p-8">
+          <div className="mb-6 inline-flex border border-line bg-surface px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+            {t('dashRef')}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <Stat dark label={t('dashBudgeted')} value={pipelineValue} />
+            <Stat dark label={t('dashWon')} value={String(DEMO.won)} />
+            <Stat dark label={t('dashPending')} value="18" />
+            <Stat dark label={t('dashLost')} value="7" />
+            <Stat
+              dark
+              label={t('dashConversion')}
+              value={pct(DEMO.won, DEMO.quotes)}
+              accent
+            />
+          </div>
+          <div className="mt-8 flex flex-wrap gap-2">
+            {sources.map((s) => (
+              <span
+                key={s}
+                className="border border-line px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+          <div className="mt-8 overflow-x-auto">
+            <table className="w-full min-w-[520px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-line font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+                  <th className="py-3 pr-4 font-medium">{t('tableOpp')}</th>
+                  <th className="py-3 pr-4 font-medium">{t('tableSource')}</th>
+                  <th className="py-3 pr-4 font-medium">{t('tableStatus')}</th>
+                  <th className="py-3 font-medium">{t('tableNext')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {demoLeads.map((row) => (
+                  <tr key={row.id} className="border-b border-line/60 text-muted">
+                    <td className="py-3 pr-4 text-fg">{row.id}</td>
+                    <td className="py-3 pr-4">{row.source}</td>
+                    <td className="py-3 pr-4">{row.status}</td>
+                    <td className="py-3 text-accent">{row.next}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Reveal>
       </Section>
 
       {/* IMPLEMENTACIÓN */}
-      <Section tone="soft" id="implementacion">
+      <Section tone="light" id="implementacion">
         <SectionHeading eyebrow={t('implEyebrow')} title={t('implTitle')} />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {impl.map((step, i) => (
+        <div className="mt-12 grid gap-4 md:grid-cols-5">
+          {implementationSteps.map((step, i) => (
             <Reveal
               key={step.n}
-              delay={i * 40}
+              delay={i * 50}
               className="border border-line bg-paper p-5"
             >
               <span className="font-mono text-xs text-accent">{step.n}</span>
@@ -321,44 +526,30 @@ export function RemodelacionesLanding({ market }: Props) {
         </div>
       </Section>
 
-      {/* CONFIANZA */}
-      <Section tone="dark" id="confianza">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <Reveal className="relative aspect-[4/3] overflow-hidden border border-line bg-ink-950">
-            <Image
-              src="/assets/stock/team.jpg"
-              alt={t('trustImageAlt')}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
-            />
-          </Reveal>
-          <Reveal delay={80}>
-            <SectionHeading
-              eyebrow={t('trustEyebrow')}
-              title={t('trustTitle')}
-              description={t('trustText')}
-            />
-            <ul className="mt-8 space-y-3 text-[15px] text-muted">
-              {(t.raw('trustPoints') as string[]).map((point) => (
-                <li
-                  key={point}
-                  className="flex gap-3 border-b border-line py-2 last:border-0"
-                >
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-accent" />
-                  {point}
+      {/* EQUIPO / CONFIANZA */}
+      <Section tone="dark" id="equipo">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <SectionHeading
+            eyebrow={t('trustEyebrow')}
+            title={t('trustTitle')}
+            description={t('trustText')}
+          />
+          <Reveal className="border border-line bg-surface p-6">
+            <p className="mono-label text-accent">{site.name}</p>
+            <ul className="mt-5 grid gap-2 text-sm text-muted sm:grid-cols-2">
+              {trustPoints.map((item) => (
+                <li key={item} className="border-b border-line py-2">
+                  {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-base font-medium text-fg">
-              {t('trustPhrase')}
-            </p>
+            <p className="mt-6 text-sm text-fg">{t('trustPhrase')}</p>
           </Reveal>
         </div>
       </Section>
 
-      {/* CASOS */}
-      <Section tone="light" id="casos">
+      {/* PRUEBA SOCIAL */}
+      <Section tone="soft" id="prueba-social">
         <SectionHeading
           eyebrow={t('casesEyebrow')}
           title={t('casesTitle')}
@@ -374,7 +565,7 @@ export function RemodelacionesLanding({ market }: Props) {
       </Section>
 
       {/* PRECIO */}
-      <Section tone="soft" id="precio">
+      <Section tone="light" id="precio">
         <SectionHeading
           eyebrow={t('priceEyebrow')}
           title={t('priceTitle')}
@@ -474,10 +665,37 @@ export function RemodelacionesLanding({ market }: Props) {
             </Link>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-faint">
-            {market.country} · {site.name}
+            {tc('lastUpdated', { date: t('lastUpdated') })}
           </p>
         </div>
       </section>
+    </div>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  accent,
+  dark,
+}: {
+  label: string;
+  value: string;
+  accent?: boolean;
+  dark?: boolean;
+}) {
+  return (
+    <div
+      className={`border border-line p-4 ${dark ? 'bg-surface' : 'bg-paper-soft'}`}
+    >
+      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+        {label}
+      </p>
+      <p
+        className={`mt-2 font-mono text-xl ${accent ? 'text-accent' : 'text-fg'}`}
+      >
+        {value}
+      </p>
     </div>
   );
 }
