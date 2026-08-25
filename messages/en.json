@@ -2701,7 +2701,188 @@
     "ctaWhatsapp": "Chat on WhatsApp",
     "ctaSchedule": "Book a call",
     "heroCalcLink": "Optional: estimate pending opportunities",
-    "fieldWebPlaceholder": "instagram.com/… or website"
+    "fieldWebPlaceholder": "instagram.com/… or website",
+    "visEyebrow": "Visibility",
+    "visTitle": "Stop measuring only how many leads come in.",
+    "visDesc": "This is what a full commercial funnel looks like: from inquiry to won project.",
+    "visRef": "Reference view",
+    "visStats": {
+      "inquiries": "Inquiries",
+      "qualified": "Qualified",
+      "visits": "Visits",
+      "quotes": "Quotes sent",
+      "won": "Projects won",
+      "pipelineValue": "Pipeline value"
+    },
+    "funnelConsulta": "Inquiry",
+    "funnelCalificada": "Qualified",
+    "funnelVisita": "Visit",
+    "funnelPresupuesto": "Quote",
+    "funnelCierre": "Close",
+    "followEyebrow": "Differentiator",
+    "followTitle": "Follow-up continues after the quote is sent.",
+    "followDesc": "Other tools stop when you send the quote. Here the pipeline continues through close or reactivation.",
+    "followPipeline": [
+      "New inquiry",
+      "Qualified",
+      "Visit scheduled",
+      "Quote sent",
+      "Deciding",
+      "Project won",
+      "Reactivation"
+    ],
+    "followUpExamples": [
+      "Follow-up 24–48 hours after the quote",
+      "Proposal reminder",
+      "Additional scope information",
+      "Answer questions on materials or timelines",
+      "Human intervention when intent is high"
+    ],
+    "followClose": "Commercial follow-up runs around your job-site operations, without replacing your ERP or admin tools.",
+    "privacyTitle": "Your job-site and admin software stays where it is.",
+    "privacyDesc": "Cluster operates as a capture and commercial follow-up layer. Technical quotes, job control and administration stay in your current tools.",
+    "opsSoftLabel": "Operations software",
+    "opsSoftItems": [
+      "Technical quotes",
+      "ERP / admin",
+      "Job-site control",
+      "Invoicing"
+    ],
+    "clusterSystemLabel": "Cluster Conversion System",
+    "clusterSystemItems": [
+      "Prospects",
+      "Campaigns",
+      "Conversations",
+      "Visits",
+      "Commercial pipeline",
+      "Follow-up"
+    ],
+    "toolsEyebrow": "Tools",
+    "toolsTitle": "We work with what your company already uses.",
+    "toolsDesc": "The solution is designed around your current channels and tools.",
+    "toolsClose": "We connect the commercial process around your stack: forms, Meta, Google, WhatsApp, calendar and CRM when integration exists.",
+    "integrations": [
+      "Web forms",
+      "Meta",
+      "Google",
+      "WhatsApp",
+      "Calendar",
+      "CRM",
+      "Existing software (when an API exists)"
+    ],
+    "demoEyebrow": "Walkthrough",
+    "demoTitle": "How an opportunity is organized from the first message.",
+    "demoDesc": "Every step leaves a trail in the pipeline for sales and follow-up.",
+    "demoSteps": [
+      {
+        "t": "Inquiry",
+        "d": "A remodel request arrives via WhatsApp, web or campaign."
+      },
+      {
+        "t": "Qualification",
+        "d": "Scope, area, timing and rough budget are captured."
+      },
+      {
+        "t": "Visit",
+        "d": "It is scheduled, confirmed and prepared for the salesperson."
+      },
+      {
+        "t": "Close",
+        "d": "Quote, follow-up and alert when there is intent to sign."
+      }
+    ],
+    "demoClose": "Everything stays organized: fewer loose chats, more commercial control.",
+    "handoffEyebrow": "Human intervention",
+    "handoffTitle": "When a person is needed, the team steps in.",
+    "handoffDesc": "The system organizes prior work; sales takes conversations that require it.",
+    "handoffAutoLabel": "Automation",
+    "handoffAutoTitle": "Commercial layer",
+    "handoffAutoItems": [
+      "Initial reply",
+      "Qualification and scheduling",
+      "Reminders and recovery",
+      "Routine follow-up"
+    ],
+    "handoffTeamLabel": "Your team",
+    "handoffTeamTitle": "Human intervention",
+    "handoffExamples": [
+      "Complex scope question",
+      "High-intent client",
+      "Quote negotiation",
+      "Technical visit",
+      "Timeline or materials objection"
+    ],
+    "handoffClose": "Your team decides the close; the system keeps the pipeline visible.",
+    "dashTitle": "Commercial visibility in one place.",
+    "dashDesc": "Inquiries, visits, quotes and closes by source, with each opportunity’s next action.",
+    "dashRef": "Reference view",
+    "sources": [
+      "Meta",
+      "Google",
+      "Instagram",
+      "Web",
+      "WhatsApp",
+      "Referrals"
+    ],
+    "tableOpp": "Opportunity",
+    "tableSource": "Source",
+    "tableStatus": "Status",
+    "tableNext": "Next action",
+    "demoLeads": [
+      {
+        "id": "Opp 001",
+        "source": "Web",
+        "status": "Quote sent",
+        "next": "Follow-up"
+      },
+      {
+        "id": "Opp 002",
+        "source": "WhatsApp",
+        "status": "Visit scheduled",
+        "next": "Confirm"
+      },
+      {
+        "id": "Opp 003",
+        "source": "Meta",
+        "status": "Deciding",
+        "next": "Call"
+      },
+      {
+        "id": "Opp 004",
+        "source": "Referral",
+        "status": "Qualified",
+        "next": "Schedule visit"
+      }
+    ],
+    "responseTimePromise": "We reply to the diagnostic within 1 business day.",
+    "lastUpdated": "2026-08-25",
+    "implSteps5": [
+      {
+        "n": "01",
+        "title": "Diagnostic",
+        "text": "We map the current commercial journey."
+      },
+      {
+        "n": "02",
+        "title": "Design",
+        "text": "We define pipeline, messages, automations and rules."
+      },
+      {
+        "n": "03",
+        "title": "Implementation",
+        "text": "We connect channels and leave the system running."
+      },
+      {
+        "n": "04",
+        "title": "Training",
+        "text": "We train your team for daily use."
+      },
+      {
+        "n": "05",
+        "title": "Optimization",
+        "text": "We adjust with real post-launch data."
+      }
+    ]
   },
   "ClinicasDentales": {
     "metaTitle": "More started treatments for dental clinics | {country}",
@@ -2824,7 +3005,228 @@
       }
     ],
     "finalTitle": "Let’s review your pending treatments together.",
-    "finalText": "No pressure and no long form. A conversation to understand your process."
+    "finalText": "No pressure and no long form. A conversation to understand your process.",
+    "visEyebrow": "Visibility",
+    "visTitle": "Stop measuring only how many inquiries come in.",
+    "visDesc": "This is what a full commercial funnel looks like: from evaluation to treatment started.",
+    "visRef": "Reference view",
+    "visStats": {
+      "evaluations": "Evaluations",
+      "quotes": "Quotes",
+      "followUps": "Follow-ups",
+      "accepted": "Accepted",
+      "started": "Treatments started",
+      "pipelineValue": "Pending value"
+    },
+    "funnelValoracion": "Evaluation",
+    "funnelPresupuesto": "Quote",
+    "funnelSeguimiento": "Follow-up",
+    "funnelAceptacion": "Acceptance",
+    "funnelInicio": "Start",
+    "modulesEyebrow": "System",
+    "modulesTitle": "Modules that sustain dental conversion.",
+    "systemModules": [
+      {
+        "title": "Initial response",
+        "text": "Immediate attention to new inquiries."
+      },
+      {
+        "title": "Qualification",
+        "text": "Captures interest, treatment and timing before intervention."
+      },
+      {
+        "title": "Scheduling",
+        "text": "Books and confirms evaluations."
+      },
+      {
+        "title": "Follow-up",
+        "text": "Continues after the quote through the decision."
+      },
+      {
+        "title": "Dashboard",
+        "text": "Pipeline visibility and next action."
+      }
+    ],
+    "followEyebrow": "Differentiator",
+    "followTitle": "Follow-up continues after the evaluation.",
+    "followDesc": "Other solutions stop when the patient books. Here the pipeline continues through treatment and recurrence.",
+    "followPipeline": [
+      "Inquiry",
+      "Evaluation booked",
+      "Attended",
+      "Quote sent",
+      "Deciding",
+      "Treatment started",
+      "Recurrence"
+    ],
+    "followUpExamples": [
+      "Follow-up 24–48 hours after the evaluation",
+      "Proposal reminder",
+      "Additional plan information",
+      "Answer questions on timelines or financing",
+      "Human intervention when intent is high"
+    ],
+    "followClose": "Commercial follow-up runs around the clinical process, without replacing the dentist’s judgment.",
+    "privacyTitle": "Clinical records stay in your dental software.",
+    "privacyDesc": "Cluster operates as a capture and commercial follow-up layer. Charts, X-rays and clinical documentation stay outside this system.",
+    "clinicalSoftLabel": "Dental software",
+    "clinicalSoftItems": [
+      "Clinical history",
+      "X-rays / imaging",
+      "Clinical plans",
+      "Health documentation"
+    ],
+    "clusterSystemLabel": "Cluster Conversion System",
+    "clusterSystemItems": [
+      "Prospects",
+      "Campaigns",
+      "Conversations",
+      "Appointments",
+      "Commercial pipeline",
+      "Follow-up"
+    ],
+    "toolsEyebrow": "Tools",
+    "toolsTitle": "We integrate with what the clinic already uses.",
+    "toolsDesc": "The solution is designed around your channels and operations software.",
+    "toolsClose": "We integrate with your operations software. We work the commercial stage: follow-up and conversion.",
+    "integrations": [
+      "Web forms",
+      "Meta",
+      "Google",
+      "WhatsApp",
+      "Calendar",
+      "CRM",
+      "Dental software (when an API exists)"
+    ],
+    "demoEyebrow": "Walkthrough",
+    "demoTitle": "How an inquiry is organized from the first message.",
+    "demoDesc": "Every step leaves a trail in the pipeline for reception and follow-up.",
+    "demoSteps": [
+      {
+        "t": "22:47",
+        "d": "“Hi, I wanted information about implants.”"
+      },
+      {
+        "t": "Reply",
+        "d": "Immediate attention and initial questions."
+      },
+      {
+        "t": "Evaluation",
+        "d": "Booking, confirmation and reception alert."
+      },
+      {
+        "t": "Follow-up",
+        "d": "Quote, reminders and human handoff."
+      }
+    ],
+    "demoClose": "Everything stays organized: fewer loose chats, more commercial control.",
+    "handoffEyebrow": "Human intervention",
+    "handoffTitle": "When a person is needed, the team steps in.",
+    "handoffDesc": "The system organizes prior work; reception and sales take conversations that require it.",
+    "handoffAutoLabel": "Automation",
+    "handoffAutoTitle": "Commercial layer",
+    "handoffTeamLabel": "Clinic team",
+    "handoffTeamTitle": "Human intervention",
+    "handoffClose": "Staff decide the close; the system keeps the pipeline visible.",
+    "dashEyebrow": "Dashboard",
+    "dashTitle": "Commercial visibility in one place.",
+    "dashDesc": "Evaluations, quotes, acceptances and treatments by source, with each next action.",
+    "dashRef": "Reference view",
+    "dashStatEvaluations": "Evaluations",
+    "dashStatQuotes": "Quotes",
+    "dashStatAccepted": "Accepted",
+    "dashStatStarted": "Started",
+    "dashStatValue": "Attributed value",
+    "sources": [
+      "Meta",
+      "Google",
+      "Instagram",
+      "Web",
+      "WhatsApp"
+    ],
+    "tablePatient": "Patient",
+    "tableSource": "Source",
+    "tableStatus": "Status",
+    "tableNext": "Next action",
+    "demoLeads": [
+      {
+        "id": "Lead 001",
+        "source": "Meta",
+        "status": "Evaluation booked",
+        "next": "Confirm"
+      },
+      {
+        "id": "Lead 002",
+        "source": "Instagram",
+        "status": "Quote sent",
+        "next": "Follow-up"
+      },
+      {
+        "id": "Lead 003",
+        "source": "Web",
+        "status": "Deciding",
+        "next": "Call"
+      },
+      {
+        "id": "Lead 004",
+        "source": "WhatsApp",
+        "status": "Treatment started",
+        "next": "Recurrence"
+      }
+    ],
+    "implEyebrow": "Implementation",
+    "implTitle": "We handle the implementation.",
+    "implementationSteps": [
+      {
+        "n": "01",
+        "title": "Diagnostic",
+        "text": "We map the current commercial journey."
+      },
+      {
+        "n": "02",
+        "title": "Design",
+        "text": "We define pipeline, messages, automations and rules."
+      },
+      {
+        "n": "03",
+        "title": "Implementation",
+        "text": "We connect channels and leave the system running."
+      },
+      {
+        "n": "04",
+        "title": "Training",
+        "text": "We train reception and sales."
+      },
+      {
+        "n": "05",
+        "title": "Optimization",
+        "text": "We adjust with real post-launch data."
+      }
+    ],
+    "trustItems": [
+      "Development and integration",
+      "Human support",
+      "Communication in Spanish",
+      "Implementation accompaniment",
+      "Post-launch optimization"
+    ],
+    "casesEyebrow": "Cases",
+    "casesTitle": "Let’s build the next success story.",
+    "casesDesc": "When documented results for evaluations and treatments are available, they will appear here with each clinic’s context.",
+    "responseTimePromise": "We reply to the diagnostic within 1 business day.",
+    "lastUpdated": "2026-08-25",
+    "priceProvisional": "Provisional price",
+    "priceNote": "Final scope is confirmed in the diagnostic.",
+    "handoffAutoItems": [
+      "Organize the pipeline",
+      "Remind follow-up",
+      "Alert the team"
+    ],
+    "handoffExamples": [
+      "Advise the patient",
+      "Close the treatment",
+      "Measure results"
+    ]
   },
   "Inmobiliarias": {
     "metaTitle": "Lead conversion system for real estate agencies",
