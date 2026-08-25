@@ -1,25 +1,31 @@
 'use client';
 
-import { useEffect } from 'react';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/Button';
 import { FAQ } from '@/components/blocks/FAQ';
 import { HeroBackgroundVideo } from '@/components/blocks/PageHero';
+import { DualCtas } from '@/components/landings/DualCtas';
+import { LandingChrome } from '@/components/landings/LandingChrome';
+import { TreatmentCalculator } from '@/components/clinicas-dentales/TreatmentCalculator';
 import { Section, SectionHeading, Eyebrow } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Reveal';
-import { TreatmentCalculator } from '@/components/clinicas-dentales/TreatmentCalculator';
 import { MinimalLeadForm } from '@/components/verticals/MinimalLeadForm';
-import { StickyWhatsAppCta } from '@/components/verticals/StickyWhatsAppCta';
 import { trackEvent } from '@/lib/analytics';
-import { site, whatsappLink } from '@/lib/site';
+import { site } from '@/lib/site';
 import {
   CALCULATOR_STORAGE_KEY,
+  CLINICAS_DENTALES_MARKETS,
   type ClinicasDentalesMarket,
+  type ClinicasDentalesMarketId,
 } from '@/lib/clinicas-dentales/markets';
 
 type Props = {
   market: ClinicasDentalesMarket;
 };
+
+const MARKET_IDS = Object.keys(
+  CLINICAS_DENTALES_MARKETS,
+) as ClinicasDentalesMarketId[];
 
 export function ClinicasDentalesLanding({ market }: Props) {
   const t = useTranslations('ClinicasDentales');
@@ -27,14 +33,69 @@ export function ClinicasDentalesLanding({ market }: Props) {
   const benefits = t.raw('benefits') as { title: string; text: string }[];
   const faqs = t.raw('faqs') as { q: string; a: string }[];
 
-  useEffect(() => {
-    trackEvent('PageView', { market: market.id, page: 'clinicas-dentales' });
-    trackEvent('landing_view', { market: market.id, page: 'clinicas-dentales' });
-  }, [market.id]);
+  const trackWa = (source: string) =>
+    trackEvent('WhatsAppClick', {
+      market: market.id,
+      source,
+      page: 'clinicas-dentales',
+    });
+  const trackCal = (source: string) =>
+    trackEvent('ScheduleStart', {
+      market: market.id,
+      source,
+      page: 'clinicas-dentales',
+    });
 
   return (
-    <div className="pb-20 md:pb-0">
-      <section className="relative overflow-hidden bg-ink-950 pt-36 pb-20 sm:pt-44 sm:pb-28">
+    <div className="clinicas-dentales-landing pt-[76px] pb-20 md:pb-0">
+      <LandingChrome
+        vertical="clinicas-dentales"
+        marketId={market.id}
+        whatsappMessage={market.whatsappMessage}
+      />
+
+      <nav
+        aria-label="Breadcrumb"
+        className="theme-dark border-b border-line bg-ink-950"
+      >
+        <div className="container-x flex flex-wrap items-center gap-2 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
+          <Link href="/" className="hover:text-accent">
+            Inicio
+          </Link>
+          <span>/</span>
+          <Link href="/clinicas-dentales" className="hover:text-accent">
+            {t('crumb')}
+          </Link>
+          <span>/</span>
+          <span className="text-fg">{market.country}</span>
+        </div>
+      </nav>
+
+      <div className="theme-dark border-b border-line bg-ink-900">
+        <div className="container-x flex flex-wrap items-center gap-2 py-3">
+          <span className="mono-label text-faint">Mercado</span>
+          {MARKET_IDS.map((id) => {
+            const m = CLINICAS_DENTALES_MARKETS[id];
+            const active = id === market.id;
+            return (
+              <Link
+                key={id}
+                href={`/clinicas-dentales/${id}`}
+                className={`px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors ${
+                  active
+                    ? 'bg-accent text-accent-fg'
+                    : 'border border-line text-muted hover:border-accent hover:text-fg'
+                }`}
+              >
+                {m.country}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* HERO — video actual conservado */}
+      <section className="relative overflow-hidden bg-ink-950 pt-20 pb-20 sm:pt-24 sm:pb-28">
         {market.videoSrc ? (
           <HeroBackgroundVideo src={market.videoSrc} />
         ) : (
@@ -46,230 +107,242 @@ export function ClinicasDentalesLanding({ market }: Props) {
           <div className="max-w-xl">
             <Reveal>
               <Eyebrow>{t('heroEyebrow')}</Eyebrow>
-            </Reveal>
-            <Reveal delay={60}>
-              <h1 className="mt-6 text-[2.15rem] font-semibold leading-[0.98] tracking-tight text-fg sm:text-5xl lg:text-[3.25rem]">
+              <h1 className="mt-5 text-[2.15rem] font-semibold leading-[0.98] tracking-tight text-fg sm:text-5xl lg:text-[3.25rem]">
                 {t('heroTitle')}
               </h1>
-            </Reveal>
-            <Reveal delay={120}>
               <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
                 {t('heroSubtitle')}
               </p>
-            </Reveal>
-            <Reveal delay={180}>
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <Button
-                  href={whatsappLink(market.whatsappMessage)}
-                  external
-                  variant="whatsapp"
-                  size="lg"
-                  icon="whatsapp"
-                  onClick={() =>
-                    trackEvent('WhatsAppClick', {
-                      source: 'hero',
-                      page: 'clinicas-dentales',
-                    })
-                  }
-                >
-                  {t('ctaWhatsapp')}
-                </Button>
-                <Button
-                  href={site.calendarUrl}
-                  size="lg"
-                  iconRight="arrow-right"
-                  onClick={() =>
-                    trackEvent('AppointmentStart', {
-                      source: 'hero',
-                      page: 'clinicas-dentales',
-                    })
-                  }
-                >
-                  {t('ctaSchedule')}
-                </Button>
+              <div className="mt-8">
+                <DualCtas
+                  whatsappMessage={market.whatsappMessage}
+                  onWhatsApp={() => trackWa('hero')}
+                  onSchedule={() => trackCal('hero')}
+                />
               </div>
-              <p className="mt-4 font-mono text-xs text-faint">{t('heroMicro')}</p>
+              <p className="mt-4 text-sm text-faint">{t('heroMicro')}</p>
+              <p className="mt-4">
+                <a
+                  href="#calculadora"
+                  className="text-sm text-muted link-underline hover:text-accent"
+                >
+                  {t('heroCalcLink')}
+                </a>
+              </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <Section tone="light">
+      {/* PROBLEMA */}
+      <Section tone="light" id="problema">
         <SectionHeading
           eyebrow={t('problemEyebrow')}
           title={t('problemTitle')}
           description={t('problemIntro')}
-          className="mb-10 max-w-3xl"
         />
-        <div className="grid gap-4 sm:grid-cols-3">
-          {problems.map((item) => (
-            <Reveal key={item.n} className="border border-line bg-surface p-6">
-              <span className="mono-label text-accent">{item.n}</span>
-              <p className="mt-4 text-[15px] leading-relaxed text-muted">
+        <div className="mt-14 grid gap-4 sm:grid-cols-3">
+          {problems.map((item, i) => (
+            <Reveal
+              key={item.n}
+              delay={i * 50}
+              className="border border-line bg-paper p-6"
+            >
+              <span className="font-mono text-xs text-accent">{item.n}</span>
+              <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
                 {item.text}
               </p>
             </Reveal>
           ))}
         </div>
-        <p className="mt-10 max-w-2xl text-lg font-medium leading-snug text-fg">
-          {t('problemClose')}
-        </p>
+        <p className="mt-10 max-w-2xl text-lg text-muted">{t('problemClose')}</p>
       </Section>
 
+      {/* CALCULADORA */}
       <Section tone="dark" id="calculadora">
-        <SectionHeading
-          tone="light"
-          eyebrow={t('calcEyebrow')}
-          title={t('calcTitle')}
-          className="mb-10 max-w-3xl"
-        />
-        <TreatmentCalculator market={market} />
+        <SectionHeading eyebrow={t('calcEyebrow')} title={t('calcTitle')} />
+        <div className="mt-12">
+          <TreatmentCalculator market={market} />
+        </div>
       </Section>
 
+      {/* BENEFICIOS */}
       <Section tone="soft" id="como-ayudamos">
         <SectionHeading
           eyebrow={t('benefitsEyebrow')}
           title={t('benefitsTitle')}
-          className="mb-10 max-w-3xl"
         />
-        <div className="grid gap-4 md:grid-cols-2">
-          {benefits.map((item) => (
-            <div key={item.title} className="border border-line bg-surface p-6">
-              <h3 className="font-display text-xl font-semibold uppercase text-fg">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted">
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          {benefits.map((item, i) => (
+            <Reveal
+              key={item.title}
+              delay={i * 50}
+              className="border border-line bg-paper p-6"
+            >
+              <p className="mono-label text-accent">{item.title}</p>
+              <p className="mt-4 text-[15px] leading-relaxed text-ink/80">
                 {item.text}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
-        <p className="mt-10 max-w-2xl text-[15px] text-muted">{t('integrateNote')}</p>
+        <p className="mt-10 max-w-2xl text-[15px] text-muted">
+          {t('integrateNote')}
+        </p>
       </Section>
 
-      <Section tone="light">
-        <div className="mx-auto max-w-2xl text-center">
-          <SectionHeading
-            align="center"
-            eyebrow={t('trustEyebrow')}
-            title={t('trustTitle')}
-            description={t('trustText')}
-            className="mx-auto"
+      {/* CONFIANZA / HANDOFF */}
+      <Section tone="light" id="confianza">
+        <SectionHeading
+          eyebrow={t('trustEyebrow')}
+          title={t('trustTitle')}
+          description={t('trustText')}
+        />
+        <div className="mt-12 grid gap-4 lg:grid-cols-2">
+          <Reveal className="border border-line bg-paper p-7">
+            <p className="mono-label text-muted">Automatización</p>
+            <ul className="mt-5 space-y-2 text-sm text-ink/75">
+              {['Ordena el pipeline', 'Recuerda el seguimiento', 'Alerta al equipo'].map(
+                (item) => (
+                  <li key={item} className="border-b border-line py-2">
+                    {item}
+                  </li>
+                ),
+              )}
+            </ul>
+          </Reveal>
+          <Reveal delay={60} className="border border-line bg-paper p-7">
+            <p className="mono-label text-accent">Tu clínica</p>
+            <ul className="mt-5 space-y-2 text-sm text-ink/75">
+              {['Asesora al paciente', 'Cierra el tratamiento', 'Mide resultados'].map(
+                (item) => (
+                  <li key={item} className="border-b border-line py-2">
+                    {item}
+                  </li>
+                ),
+              )}
+            </ul>
+          </Reveal>
+        </div>
+        <div className="mt-10">
+          <DualCtas
+            whatsappMessage={market.whatsappMessage}
+            onWhatsApp={() => trackWa('confianza')}
+            onSchedule={() => trackCal('confianza')}
           />
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button
-              href={whatsappLink(market.whatsappMessage)}
-              external
-              variant="whatsapp"
-              size="lg"
-              icon="whatsapp"
-            >
-              {t('ctaWhatsapp')}
-            </Button>
-            <Button href={site.calendarUrl} size="lg" iconRight="arrow-right">
-              {t('ctaSchedule')}
-            </Button>
-          </div>
         </div>
       </Section>
 
-      <Section tone="dark" id="contacto">
-        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-16">
-          <div>
-            <SectionHeading
-              tone="light"
-              eyebrow={t('formEyebrow')}
-              title={t('formTitle')}
-              description={t('formDesc')}
+      {/* PRECIO */}
+      {(market.implementationFromUsd != null ||
+        market.implementationFromLocal) && (
+        <Section tone="dark" id="precio">
+          <SectionHeading
+            eyebrow="Inversión"
+            title="La implementación se adapta a tu clínica."
+            description="Alcance según volumen de valoraciones, canales e integraciones."
+          />
+          <Reveal className="mt-10 max-w-xl border border-line bg-surface p-8">
+            <p className="mono-label text-accent">Precio provisional</p>
+            {market.implementationFromUsd != null && (
+              <p className="mt-4 font-display text-4xl text-fg sm:text-5xl">
+                Desde USD {market.implementationFromUsd}
+              </p>
+            )}
+            {market.implementationFromLocal && (
+              <p className="mt-2 text-sm text-muted">
+                {market.implementationFromLocal}
+              </p>
+            )}
+            {market.showMonthly && market.monthlyFromUsd != null ? (
+              <p className="mt-4 font-mono text-sm text-accent">
+                Mensualidad desde USD {market.monthlyFromUsd}
+              </p>
+            ) : (
+              <p className="mt-4 text-sm text-muted">
+                Mensualidad: se define según alcance
+              </p>
+            )}
+            <DualCtas
+              className="mt-6"
+              size="md"
+              whatsappMessage={market.whatsappMessage}
+              onWhatsApp={() => trackWa('precio')}
+              onSchedule={() => trackCal('precio')}
             />
-            <p className="mt-6 text-[15px] leading-relaxed text-muted">
+          </Reveal>
+        </Section>
+      )}
+
+      {/* CONTACTO */}
+      <Section tone="soft" id="contacto">
+        <SectionHeading
+          eyebrow={t('formEyebrow')}
+          title="Hablemos de tu pipeline de tratamientos"
+          description={t('formDesc')}
+        />
+        <div className="mt-10 max-w-3xl space-y-8">
+          <div>
+            <p className="mono-label text-accent">Habla con el equipo</p>
+            <p className="mt-3 max-w-xl text-[15px] text-muted">
               {t('formMicro')}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Button
-                href={whatsappLink(market.whatsappMessage)}
-                external
-                variant="whatsapp"
-                size="lg"
-                icon="whatsapp"
-                onClick={() =>
-                  trackEvent('WhatsAppClick', { source: 'form_aside' })
-                }
-              >
-                {t('ctaWhatsapp')}
-              </Button>
-              <Button
-                href={site.calendarUrl}
-                size="lg"
-                iconRight="arrow-right"
-                onClick={() =>
-                  trackEvent('AppointmentStart', { source: 'form_aside' })
-                }
-              >
-                {t('ctaSchedule')}
-              </Button>
-            </div>
+            <DualCtas
+              className="mt-6"
+              whatsappMessage={market.whatsappMessage}
+              onWhatsApp={() => trackWa('contact_section')}
+              onSchedule={() => trackCal('contact_section')}
+            />
           </div>
-          <MinimalLeadForm
-            i18nNamespace="ClinicasDentales"
-            vertical="clinicas-dentales"
-            country={market.country}
-            landingPath={`/clinicas-dentales/${market.id}`}
-            origen={`clinicas-dentales-${market.id}`}
-            servicio="Conversión tratamientos clínicas dentales"
-            whatsappMessage={market.whatsappMessage}
-            calculatorStorageKey={CALCULATOR_STORAGE_KEY}
-          />
+          <div className="border-t border-line pt-8">
+            <p className="mb-5 text-sm text-muted">{t('formTitle')}</p>
+            <MinimalLeadForm
+              i18nNamespace="ClinicasDentales"
+              vertical="clinicas-dentales"
+              country={market.country}
+              landingPath={`/clinicas-dentales/${market.id}`}
+              origen={`clinicas-dentales-${market.id}`}
+              servicio="Conversión tratamientos clínicas dentales"
+              whatsappMessage={market.whatsappMessage}
+              calculatorStorageKey={CALCULATOR_STORAGE_KEY}
+            />
+          </div>
         </div>
       </Section>
 
-      <Section tone="soft">
+      {/* FAQ */}
+      <Section tone="light" id="faq">
         <SectionHeading
           eyebrow={t('faqEyebrow')}
           title={t('faqTitle')}
           align="center"
-          className="mx-auto mb-10"
         />
-        <FAQ items={faqs} />
-      </Section>
-
-      <Section tone="brand">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-3xl font-bold uppercase text-fg sm:text-4xl">
-            {t('finalTitle')}
-          </h2>
-          <p className="mt-5 text-muted">{t('finalText')}</p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button
-              href={whatsappLink(market.whatsappMessage)}
-              external
-              variant="whatsapp"
-              size="lg"
-              icon="whatsapp"
-              onClick={() => trackEvent('WhatsAppClick', { source: 'final' })}
-            >
-              {t('ctaWhatsapp')}
-            </Button>
-            <Button
-              href={site.calendarUrl}
-              size="lg"
-              variant="accent"
-              iconRight="arrow-right"
-              onClick={() =>
-                trackEvent('AppointmentStart', { source: 'final' })
-              }
-            >
-              {t('ctaSchedule')}
-            </Button>
-          </div>
+        <div className="mt-12">
+          <FAQ items={faqs} />
         </div>
       </Section>
 
-      <StickyWhatsAppCta
-        label={t('stickyCta')}
-        whatsappMessage={market.whatsappMessage}
-        vertical="clinicas-dentales"
-      />
+      <section className="theme-dark border-t border-line bg-ink-950 py-10 text-fg">
+        <div className="container-x flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap gap-4 text-sm text-muted">
+            <Link href="/inmobiliarias" className="hover:text-accent">
+              Inmobiliarias
+            </Link>
+            <Link href="/remodelaciones" className="hover:text-accent">
+              Remodelaciones
+            </Link>
+            <Link href="/contacto" className="hover:text-accent">
+              Contacto
+            </Link>
+            <Link href="/privacidad" className="hover:text-accent">
+              Privacidad
+            </Link>
+          </div>
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-faint">
+            {market.country} · {site.name}
+          </p>
+        </div>
+      </section>
     </div>
   );
 }
