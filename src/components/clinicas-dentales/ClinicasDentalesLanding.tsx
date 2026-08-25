@@ -29,9 +29,13 @@ const MARKET_IDS = Object.keys(
 
 export function ClinicasDentalesLanding({ market }: Props) {
   const t = useTranslations('ClinicasDentales');
+  const tc = useTranslations('Common');
+  const tn = useTranslations('Nav');
   const problems = t.raw('problems') as { n: string; text: string }[];
   const benefits = t.raw('benefits') as { title: string; text: string }[];
   const faqs = t.raw('faqs') as { q: string; a: string }[];
+  const handoffAutomationItems = t.raw('handoffAutomationItems') as string[];
+  const handoffClinicItems = t.raw('handoffClinicItems') as string[];
 
   const trackWa = (source: string) =>
     trackEvent('WhatsAppClick', {
@@ -60,7 +64,7 @@ export function ClinicasDentalesLanding({ market }: Props) {
       >
         <div className="container-x flex flex-wrap items-center gap-2 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
           <Link href="/" className="hover:text-accent">
-            Inicio
+            {tc('home')}
           </Link>
           <span>/</span>
           <Link href="/clinicas-dentales" className="hover:text-accent">
@@ -73,7 +77,7 @@ export function ClinicasDentalesLanding({ market }: Props) {
 
       <div className="theme-dark border-b border-line bg-ink-900">
         <div className="container-x flex flex-wrap items-center gap-2 py-3">
-          <span className="mono-label text-faint">Mercado</span>
+          <span className="mono-label text-faint">{tc('market')}</span>
           {MARKET_IDS.map((id) => {
             const m = CLINICAS_DENTALES_MARKETS[id];
             const active = id === market.id;
@@ -200,27 +204,23 @@ export function ClinicasDentalesLanding({ market }: Props) {
         />
         <div className="mt-12 grid gap-4 lg:grid-cols-2">
           <Reveal className="border border-line bg-paper p-7">
-            <p className="mono-label text-muted">Automatización</p>
+            <p className="mono-label text-muted">{t('handoffAutomation')}</p>
             <ul className="mt-5 space-y-2 text-sm text-ink/75">
-              {['Ordena el pipeline', 'Recuerda el seguimiento', 'Alerta al equipo'].map(
-                (item) => (
-                  <li key={item} className="border-b border-line py-2">
-                    {item}
-                  </li>
-                ),
-              )}
+              {handoffAutomationItems.map((item) => (
+                <li key={item} className="border-b border-line py-2">
+                  {item}
+                </li>
+              ))}
             </ul>
           </Reveal>
           <Reveal delay={60} className="border border-line bg-paper p-7">
-            <p className="mono-label text-accent">Tu clínica</p>
+            <p className="mono-label text-accent">{t('handoffClinic')}</p>
             <ul className="mt-5 space-y-2 text-sm text-ink/75">
-              {['Asesora al paciente', 'Cierra el tratamiento', 'Mide resultados'].map(
-                (item) => (
-                  <li key={item} className="border-b border-line py-2">
-                    {item}
-                  </li>
-                ),
-              )}
+              {handoffClinicItems.map((item) => (
+                <li key={item} className="border-b border-line py-2">
+                  {item}
+                </li>
+              ))}
             </ul>
           </Reveal>
         </div>
@@ -238,15 +238,15 @@ export function ClinicasDentalesLanding({ market }: Props) {
         market.implementationFromLocal) && (
         <Section tone="dark" id="precio">
           <SectionHeading
-            eyebrow="Inversión"
-            title="La implementación se adapta a tu clínica."
-            description="Alcance según volumen de valoraciones, canales e integraciones."
+            eyebrow={t('priceEyebrow')}
+            title={t('priceTitle')}
+            description={t('priceText')}
           />
           <Reveal className="mt-10 max-w-xl border border-line bg-surface p-8">
-            <p className="mono-label text-accent">Precio provisional</p>
+            <p className="mono-label text-accent">{tc('provisionalPrice')}</p>
             {market.implementationFromUsd != null && (
               <p className="mt-4 font-display text-4xl text-fg sm:text-5xl">
-                Desde USD {market.implementationFromUsd}
+                {t('priceFrom', { amount: market.implementationFromUsd })}
               </p>
             )}
             {market.implementationFromLocal && (
@@ -256,11 +256,11 @@ export function ClinicasDentalesLanding({ market }: Props) {
             )}
             {market.showMonthly && market.monthlyFromUsd != null ? (
               <p className="mt-4 font-mono text-sm text-accent">
-                Mensualidad desde USD {market.monthlyFromUsd}
+                {t('priceMonthly', { amount: market.monthlyFromUsd })}
               </p>
             ) : (
               <p className="mt-4 text-sm text-muted">
-                Mensualidad: se define según alcance
+                {tc('monthlyDefinedByScope')}
               </p>
             )}
             <DualCtas
@@ -278,12 +278,12 @@ export function ClinicasDentalesLanding({ market }: Props) {
       <Section tone="soft" id="contacto">
         <SectionHeading
           eyebrow={t('formEyebrow')}
-          title="Hablemos de tu pipeline de tratamientos"
+          title={t('contactSectionTitle')}
           description={t('formDesc')}
         />
         <div className="mt-10 max-w-3xl space-y-8">
           <div>
-            <p className="mono-label text-accent">Habla con el equipo</p>
+            <p className="mono-label text-accent">{tc('talkToTeam')}</p>
             <p className="mt-3 max-w-xl text-[15px] text-muted">
               {t('formMicro')}
             </p>
@@ -326,16 +326,16 @@ export function ClinicasDentalesLanding({ market }: Props) {
         <div className="container-x flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-4 text-sm text-muted">
             <Link href="/inmobiliarias" className="hover:text-accent">
-              Inmobiliarias
+              {tn('inmobiliarias')}
             </Link>
             <Link href="/remodelaciones" className="hover:text-accent">
-              Remodelaciones
+              {tn('remodelaciones')}
             </Link>
             <Link href="/contacto" className="hover:text-accent">
-              Contacto
+              {tc('contact')}
             </Link>
             <Link href="/privacidad" className="hover:text-accent">
-              Privacidad
+              {tc('privacy')}
             </Link>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-faint">

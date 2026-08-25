@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/components/ui/Icon';
 import { DualCtas } from '@/components/landings/DualCtas';
 import { trackEvent } from '@/lib/analytics';
@@ -14,6 +15,7 @@ type Props = {
 
 /** Chrome compartido de landings verticales (progreso, sticky CTAs, cookies). */
 export function LandingChrome({ vertical, marketId, whatsappMessage }: Props) {
+  const t = useTranslations('Common');
   const [progress, setProgress] = useState(0);
   const [showTop, setShowTop] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
@@ -106,7 +108,7 @@ export function LandingChrome({ vertical, marketId, whatsappMessage }: Props) {
       {showTop && (
         <button
           type="button"
-          aria-label="Volver arriba"
+          aria-label={t('backToTop')}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-28 right-5 z-40 flex h-11 w-11 items-center justify-center border border-line bg-ink-900 text-fg shadow-panel transition hover:border-accent hover:text-accent md:bottom-5"
         >
@@ -117,10 +119,9 @@ export function LandingChrome({ vertical, marketId, whatsappMessage }: Props) {
       {!cookieOk && (
         <div className="fixed inset-x-4 bottom-28 z-50 max-w-lg border border-line bg-ink-900 p-4 text-sm text-muted shadow-panel sm:left-5 sm:right-auto md:bottom-5">
           <p>
-            Usamos cookies y etiquetas de medición (GTM/GA4/Meta) para entender
-            el recorrido comercial de esta página.{' '}
+            {t('cookieBanner')}{' '}
             <Link href="/privacidad" className="text-accent link-underline">
-              Privacidad
+              {t('privacy')}
             </Link>
           </p>
           <button
@@ -128,7 +129,7 @@ export function LandingChrome({ vertical, marketId, whatsappMessage }: Props) {
             onClick={acceptCookies}
             className="mt-3 bg-accent px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-accent-fg"
           >
-            Entendido
+            {t('cookieAccept')}
           </button>
         </div>
       )}

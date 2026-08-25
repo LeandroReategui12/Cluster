@@ -122,6 +122,17 @@
     "privacyPolicy": "Privacy Policy",
     "termsConditions": "Terms and Conditions",
     "home": "Inicio",
+    "market": "Mercado",
+    "contact": "Contacto",
+    "privacy": "Privacidad",
+    "talkWhatsApp": "Hablar por WhatsApp",
+    "bookCall": "Agendar una llamada",
+    "backToTop": "Volver arriba",
+    "cookieBanner": "Usamos cookies y etiquetas de medición (GTM/GA4/Meta) para entender el recorrido comercial de esta página.",
+    "cookieAccept": "Entendido",
+    "talkToTeam": "Habla con el equipo",
+    "provisionalPrice": "Precio provisional",
+    "monthlyDefinedByScope": "Mensualidad: se define según alcance",
     "breadcrumbPlans": "Planes",
     "breadcrumbBlog": "Blog",
     "seeAllServices": "Ver todos los servicios",
@@ -244,6 +255,7 @@
     "clinicasEsteticas": "Clínicas estéticas",
     "inmobiliarias": "Inmobiliarias",
     "remodelaciones": "Remodelaciones",
+    "clinicasDentales": "Clínicas dentales",
     "plans": "Planes",
     "cases": "Casos de Éxito",
     "about": "Sobre Cluster",
@@ -2619,6 +2631,7 @@
     "formEyebrow": "Contacto",
     "formTitle": "Prefieres dejar tus datos",
     "formDesc": "También puedes escribirnos por WhatsApp o agendar una llamada sin completar este formulario.",
+    "contactSectionTitle": "Hablemos de tu proceso comercial",
     "fieldName": "Nombre",
     "fieldCompany": "Empresa",
     "fieldWeb": "Website o Instagram (opcional)",
@@ -2700,7 +2713,7 @@
     "metaDescription": "Ayudamos a clínicas dentales a dar seguimiento a presupuestos y convertir más tratamientos de alto valor.",
     "crumb": "Clínicas dentales",
     "heroEyebrow": "Para clínicas dentales",
-    "heroTitle": "¿Cuántos presupuestos dejaste sin seguimiento este mes?",
+    "heroTitle": "Automatiza y sistematiza el marketing de tu clínica dental.",
     "heroSubtitle": "Te ayudamos a organizar el seguimiento después de la valoración, para que más pacientes inicien el tratamiento.",
     "heroMicro": "Sin compromiso. Conversemos primero.",
     "heroCalcLink": "Opcional: estimar tratamientos pendientes",
@@ -2759,7 +2772,25 @@
         "text": "Ves qué se presupuesta, qué se acepta y qué queda pendiente."
       }
     ],
-    "integrateNote": "No reemplazamos tu software operativo. Trabajamos en la etapa comercial: seguimiento y conversión.",
+    "integrateNote": "Nos integramos con tu software operativo. Trabajamos la etapa comercial: seguimiento y conversión.",
+    "handoffAutomation": "Automatización",
+    "handoffClinic": "Tu clínica",
+    "handoffAutomationItems": [
+      "Ordena el pipeline",
+      "Recuerda el seguimiento",
+      "Alerta al equipo"
+    ],
+    "handoffClinicItems": [
+      "Asesora al paciente",
+      "Cierra el tratamiento",
+      "Mide resultados"
+    ],
+    "priceEyebrow": "Inversión",
+    "priceTitle": "La implementación se adapta a tu clínica.",
+    "priceText": "Alcance según volumen de valoraciones, canales e integraciones.",
+    "priceFrom": "Desde USD {amount}",
+    "priceMonthly": "Mensualidad desde USD {amount}",
+    "contactSectionTitle": "Hablemos de tu pipeline de tratamientos",
     "trustEyebrow": "Cluster Media",
     "trustTitle": "Te acompañamos de verdad.",
     "trustText": "Diseñamos e implementamos el proceso con tu equipo. Sin cuestionarios largos: primero conversamos.",
@@ -2783,7 +2814,7 @@
     "faqs": [
       {
         "q": "¿Reemplazan el software operativo?",
-        "a": "No. Nos enfocamos en el seguimiento comercial después de la valoración."
+        "a": "No. Nos integramos con tu software operativo y nos enfocamos en el seguimiento comercial después de la valoración."
       },
       {
         "q": "¿Tengo que llenar un cuestionario largo?",

@@ -30,6 +30,8 @@ const MARKET_IDS = Object.keys(
 
 export function RemodelacionesLanding({ market }: Props) {
   const t = useTranslations('Remodelaciones');
+  const tc = useTranslations('Common');
+  const tn = useTranslations('Nav');
   const problems = t.raw('problems') as { n: string; text: string }[];
   const howSteps = t.raw('howSteps') as {
     title: string;
@@ -68,7 +70,7 @@ export function RemodelacionesLanding({ market }: Props) {
       >
         <div className="container-x flex flex-wrap items-center gap-2 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
           <Link href="/" className="hover:text-accent">
-            Inicio
+            {tc('home')}
           </Link>
           <span>/</span>
           <Link href="/remodelaciones" className="hover:text-accent">
@@ -81,7 +83,7 @@ export function RemodelacionesLanding({ market }: Props) {
 
       <div className="theme-dark border-b border-line bg-ink-900">
         <div className="container-x flex flex-wrap items-center gap-2 py-3">
-          <span className="mono-label text-faint">Mercado</span>
+          <span className="mono-label text-faint">{tc('market')}</span>
           {MARKET_IDS.map((id) => {
             const m = REMODELACIONES_MARKETS[id];
             const active = id === market.id;
@@ -379,7 +381,7 @@ export function RemodelacionesLanding({ market }: Props) {
           description={t('priceText')}
         />
         <Reveal className="mt-10 max-w-xl border border-line bg-paper p-8">
-          <p className="mono-label text-accent">Precio provisional</p>
+          <p className="mono-label text-accent">{tc('provisionalPrice')}</p>
           {market.implementationFromUsd != null && (
             <p className="mt-4 font-display text-4xl text-ink sm:text-5xl">
               {t('priceFrom', { amount: market.implementationFromUsd })}
@@ -411,12 +413,12 @@ export function RemodelacionesLanding({ market }: Props) {
       <Section tone="dark" id="contacto">
         <SectionHeading
           eyebrow={t('formEyebrow')}
-          title="Hablemos de tu proceso comercial"
+          title={t('contactSectionTitle')}
           description={t('formDesc')}
         />
         <div className="mt-10 max-w-3xl space-y-8">
           <div>
-            <p className="mono-label text-accent">Habla con el equipo</p>
+            <p className="mono-label text-accent">{tc('talkToTeam')}</p>
             <p className="mt-3 max-w-xl text-[15px] text-muted">
               {t('formMicro')}
             </p>
@@ -459,16 +461,16 @@ export function RemodelacionesLanding({ market }: Props) {
         <div className="container-x flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-4 text-sm text-muted">
             <Link href="/inmobiliarias" className="hover:text-accent">
-              Inmobiliarias
+              {tn('inmobiliarias')}
             </Link>
             <Link href="/clinicas-dentales" className="hover:text-accent">
-              Clínicas dentales
+              {tn('clinicasDentales')}
             </Link>
             <Link href="/contacto" className="hover:text-accent">
-              Contacto
+              {tc('contact')}
             </Link>
             <Link href="/privacidad" className="hover:text-accent">
-              Privacidad
+              {tc('privacy')}
             </Link>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-faint">

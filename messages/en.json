@@ -122,6 +122,17 @@
     "privacyPolicy": "Privacy Policy",
     "termsConditions": "Terms and Conditions",
     "home": "Home",
+    "market": "Market",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "talkWhatsApp": "Chat on WhatsApp",
+    "bookCall": "Book a call",
+    "backToTop": "Back to top",
+    "cookieBanner": "We use cookies and measurement tags (GTM/GA4/Meta) to understand the commercial journey on this page.",
+    "cookieAccept": "Got it",
+    "talkToTeam": "Talk to the team",
+    "provisionalPrice": "Provisional pricing",
+    "monthlyDefinedByScope": "Monthly fee: defined by scope",
     "breadcrumbPlans": "Plans",
     "breadcrumbBlog": "Blog",
     "seeAllServices": "View all services",
@@ -244,6 +255,7 @@
     "clinicasEsteticas": "Aesthetic clinics",
     "inmobiliarias": "Real estate",
     "remodelaciones": "Remodeling",
+    "clinicasDentales": "Dental clinics",
     "plans": "Plans",
     "cases": "Success Stories",
     "about": "About Cluster",
@@ -2614,6 +2626,7 @@
     "formEyebrow": "Contact",
     "formTitle": "Prefer to leave your details",
     "formDesc": "You can also message us on WhatsApp or book a call without filling this form.",
+    "contactSectionTitle": "Let’s talk about your commercial process",
     "fieldName": "Name",
     "fieldCompany": "Company",
     "fieldWeb": "Website or Instagram (optional)",
@@ -2695,7 +2708,7 @@
     "metaDescription": "We help dental clinics follow up on quotes and convert more high-value treatments.",
     "crumb": "Dental clinics",
     "heroEyebrow": "For dental clinics",
-    "heroTitle": "How many quotes went without follow-up this month?",
+    "heroTitle": "Automate and systematize marketing for your dental clinic.",
     "heroSubtitle": "We help you organize follow-up after the evaluation, so more patients start treatment.",
     "heroMicro": "No commitment. Let’s talk first.",
     "heroCalcLink": "Optional: estimate pending treatments",
@@ -2754,7 +2767,25 @@
         "text": "See what gets quoted, accepted and left pending."
       }
     ],
-    "integrateNote": "We don’t replace your operations software. We work on the commercial stage: follow-up and conversion.",
+    "integrateNote": "We integrate with your operations software. We work the commercial stage: follow-up and conversion.",
+    "handoffAutomation": "Automation",
+    "handoffClinic": "Your clinic",
+    "handoffAutomationItems": [
+      "Organize the pipeline",
+      "Remind follow-up",
+      "Alert the team"
+    ],
+    "handoffClinicItems": [
+      "Advise the patient",
+      "Close the treatment",
+      "Measure results"
+    ],
+    "priceEyebrow": "Investment",
+    "priceTitle": "Implementation adapts to your clinic.",
+    "priceText": "Scope depends on evaluation volume, channels and integrations.",
+    "priceFrom": "From USD {amount}",
+    "priceMonthly": "Monthly from USD {amount}",
+    "contactSectionTitle": "Let’s talk about your treatment pipeline",
     "trustEyebrow": "Cluster Media",
     "trustTitle": "Real support from a real team.",
     "trustText": "We design and implement the process with your team. No long forms—we talk first.",
@@ -2777,7 +2808,7 @@
     "faqs": [
       {
         "q": "Do you replace operations software?",
-        "a": "No. We focus on commercial follow-up after the evaluation."
+        "a": "No. We integrate with your operations software and focus on commercial follow-up after the evaluation."
       },
       {
         "q": "Do I need a long questionnaire?",
