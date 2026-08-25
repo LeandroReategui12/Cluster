@@ -1,31 +1,10 @@
-import Link from 'next/link';
+'use client';
+
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { Logo } from '@/components/ui/Logo';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { site, whatsappLink } from '@/lib/site';
-
-const columns = [
-  {
-    title: 'Servicios',
-    links: [
-      { label: 'Branding', href: '/branding' },
-      { label: 'Planes mensuales', href: '/#planes' },
-      { label: 'Redes Sociales', href: '/redes-sociales' },
-      { label: 'Google Ads', href: '/google-ads' },
-      { label: 'IA / Automatizaciones', href: '/automatizaciones-ia' },
-      { label: 'Websites / SEO', href: '/websites-seo' },
-      { label: 'SEO Audit', href: '/seo-audit' },
-    ],
-  },
-  {
-    title: 'Empresa',
-    links: [
-      { label: 'Sobre Cluster', href: '/sobre-cluster' },
-      { label: 'Casos de Éxito', href: '/casos-de-exito' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Contacto', href: '/contacto' },
-    ],
-  },
-];
 
 const socials: { name: IconName; href: string; label: string }[] = [
   { name: 'instagram', href: site.social.instagram, label: 'Instagram' },
@@ -35,6 +14,34 @@ const socials: { name: IconName; href: string; label: string }[] = [
 ];
 
 export function Footer() {
+  const t = useTranslations('Footer');
+  const tn = useTranslations('Nav');
+  const tc = useTranslations('Common');
+
+  const columns = [
+    {
+      title: t('servicesTitle'),
+      links: [
+        { label: tn('branding'), href: '/branding' },
+        { label: t('monthlyPlans'), href: '/#planes' },
+        { label: tn('social'), href: '/redes-sociales' },
+        { label: tn('googleAds'), href: '/google-ads' },
+        { label: tn('automation'), href: '/automatizaciones-ia' },
+        { label: tn('websitesSeo'), href: '/websites-seo' },
+        { label: tn('seoAudit'), href: '/seo-audit' },
+      ],
+    },
+    {
+      title: t('companyTitle'),
+      links: [
+        { label: tn('about'), href: '/sobre-cluster' },
+        { label: tn('cases'), href: '/casos-de-exito' },
+        { label: tn('blog'), href: '/blog' },
+        { label: tn('contact'), href: '/contacto' },
+      ],
+    },
+  ];
+
   return (
     <footer className="relative overflow-hidden border-t border-line bg-ink-950 text-white">
       <div
@@ -43,12 +50,10 @@ export function Footer() {
       />
       <div className="container-x relative">
         <div className="grid gap-12 py-16 lg:grid-cols-12 lg:py-20">
-          {/* Marca + descripción */}
           <div className="lg:col-span-4">
             <Logo variant="light" />
             <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-white/55">
-              Comunicación digital cercana, real y distinta para marcas que
-              quieren conectar con su audiencia y crecer.
+              {t('tagline')}
             </p>
             <div className="mt-6 flex gap-2.5">
               {socials.map((s) => (
@@ -66,7 +71,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Columnas de enlaces */}
           {columns.map((col) => (
             <div key={col.title} className="lg:col-span-2">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-white/40">
@@ -87,21 +91,22 @@ export function Footer() {
             </div>
           ))}
 
-          {/* Contacto */}
           <div className="lg:col-span-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white/40">
-              Contacto
+              {t('contactTitle')}
             </h3>
             <ul className="mt-4 space-y-3">
               <li>
                 <a
                   href={site.calendarUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 text-[15px] text-white/65 transition-colors hover:text-accent"
                 >
-                  <Icon name="calendar" size={17} className="text-accent" />
-                  Agendar llamada
+                  <Icon
+                    name="calendar"
+                    size={17}
+                    className="shrink-0 text-accent"
+                  />
+                  {tc('scheduleCall')}
                 </a>
               </li>
               <li>
@@ -111,8 +116,12 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 text-[15px] text-white/65 transition-colors hover:text-accent"
                 >
-                  <Icon name="whatsapp" size={17} className="text-accent" />
-                  WhatsApp
+                  <Icon
+                    name="whatsapp"
+                    size={17}
+                    className="shrink-0 text-accent"
+                  />
+                  {tc('whatsapp')}
                 </a>
               </li>
               <li>
@@ -120,38 +129,44 @@ export function Footer() {
                   href={`mailto:${site.email}`}
                   className="inline-flex items-center gap-2.5 text-[15px] text-white/65 transition-colors hover:text-accent"
                 >
-                  <Icon name="mail" size={17} className="text-accent" />
+                  <Icon name="mail" size={17} className="shrink-0 text-accent" />
                   {site.email}
                 </a>
               </li>
-              <li className="inline-flex items-center gap-2.5 text-[15px] text-white/65">
-                <Icon name="pin" size={17} className="text-accent" />
-                {site.location}
+              <li className="flex items-start gap-2.5 text-[15px] text-white/65">
+                <Icon
+                  name="pin"
+                  size={17}
+                  className="mt-0.5 shrink-0 text-accent"
+                />
+                <span className="leading-snug">
+                  {t('addressLine1')}
+                  <br />
+                  {t('addressLine2')}
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Barra inferior */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-line py-7 sm:flex-row">
-          <p className="text-sm text-white/45">
-            © {new Date().getFullYear()} {site.name}. Todos los derechos
-            reservados.
-          </p>
-          <div className="flex gap-6">
+        <div className="relative flex flex-col items-center gap-4 border-t border-line py-7">
+          <div className="flex gap-6 sm:absolute sm:left-0 sm:top-1/2 sm:-translate-y-1/2">
             <Link
               href="/privacidad"
               className="text-sm text-white/45 transition-colors hover:text-white/80"
             >
-              Privacy Policy
+              {tc('privacyPolicy')}
             </Link>
             <Link
               href="/terminos"
               className="text-sm text-white/45 transition-colors hover:text-white/80"
             >
-              Terms and Conditions
+              {tc('termsConditions')}
             </Link>
           </div>
+          <p className="text-center text-sm text-white/45">
+            © {new Date().getFullYear()} {site.name}. {tc('allRights')}
+          </p>
         </div>
       </div>
     </footer>
